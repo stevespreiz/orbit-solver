@@ -1,4 +1,5 @@
 # Solver for 2 body problem
+# Based off YouTube series 'Orbital Mechanics with Python' by Alfonso Gonzalez
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -43,8 +44,6 @@ def plot(rs):
     plt.legend() # automatically fills earlier
     plt.show()
 
-earth_radius = 6378.0 # km
-earth_mu = 398600.0 # km^3/s^2
 
 def diff_eq(t,y,mu):
     # unpack state
@@ -58,6 +57,11 @@ def diff_eq(t,y,mu):
     ax,ay,az = -r*mu/norm_r**3
 
     return [vx,vy,vz,ax,ay,az]
+
+
+earth_radius = 6378.0 # km
+earth_mu = 398600.0 # km^3/s^2
+
 
 #if __name__ == 'main':
 # orbit parameters
