@@ -1,5 +1,8 @@
 # planetary data file for organization (dictionary)
 
+G_meters = 6.67408e-11
+G_km = G_meters/1e9
+
 sun = {
     'name'   : 'Sun',
     'mass'   : 1.989e30,   # kg
