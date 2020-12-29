@@ -18,6 +18,7 @@ class OrbitPropagator:
         self.cb = cb
         self.ys = np.zeros((1,6))
         self.ts = np.zeros((1,1))
+        self.rs = r0
 
 
     def diff_eq(self,t,y):
@@ -35,16 +36,17 @@ class OrbitPropagator:
 
 
     def propagate_orbit(self):
-        ## Something wrong with this newer version of scipy.integrate so sticking
-        ## with old one for now
-        # # IC
-        # self.y0 = self.r0+self.v0 # concatenate lists
+        # Something wrong with this newer version of scipy.integrate so sticking
+        # with old one for now
+        # IC
+        # self.y0 = np.array(self.r0+self.v0) # concatenate lists
         #
         # # set of t values at which output is desired
         #
-        # t_output = np.linspace(0,self.tf,int(np.ceil(self.tf/100)))
+        # t_output = np.linspace(0,self.tf,int(np.ceil(self.tf/100)+1))
+        # print(t_output)
         #
-        # sol = ode.solve_ivp(self.diff_eq,[0,self.tf],self.y0,t_eval=t_output,method='LSODA')
+        # sol = ode.solve_ivp(self.diff_eq,[0,self.tf],self.y0,method='RK45',t_eval=t_output,vectorized=False)
         # self.ys = sol.y
         # self.ts = sol.t
         # self.ys = np.transpose(np.array(self.ys))
@@ -82,7 +84,7 @@ class OrbitPropagator:
             self.ys[n] = solver.y
             n += 1
 
-        rs = self.ys[:,:3]
+        self.rs = self.ys[:,:3]
 
 
     # 3D plotting function
@@ -90,7 +92,7 @@ class OrbitPropagator:
         plt.style.use('dark_background')
         fig = plt.figure(figsize = (12,6))
         ax  = fig.add_subplot(111,projection='3d')
-        rs = self.ys[:,:3]
+        # rs = self.ys[:,:3]
 
         # plot trajectory
         ax.plot(rs[:,0],rs[:,1],rs[:,2],'w',label='trajectory')
